@@ -250,11 +250,12 @@ With IVF: Compare query to ~30k vectors (97% speedup!)
 
 ### K-Means Details
 
-**Default Parameters** (LanceDB internal):
+**Default Parameters** (LanceDB internal, not configurable in osgrep):
 - **Number of clusters (k)**: `sqrt(N)` where N = number of vectors
   - Example: 10,000 vectors → ~100 clusters
-- **nprobe**: Number of clusters to search (default: 20)
+- **nprobe**: Number of clusters to search (LanceDB default: 20)
   - Higher nprobe = better accuracy, slower search
+  - This is a LanceDB internal parameter, not exposed in osgrep's API
 - **Training iterations**: ~25 iterations of Lloyd's algorithm
 
 **Why IVF_FLAT?**

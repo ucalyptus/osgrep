@@ -68,7 +68,9 @@ This document provides a detailed walkthrough of how a search query flows throug
 
 ## Key Insights
 
-1. **IVF (k-means) provides 4-10x speedup** with minimal accuracy loss
+1. **IVF (k-means) provides 4-10x speedup** compared to flat (brute force) search with ~95% recall
+   - Flat search: O(N) - 50ms for 10k chunks
+   - IVF search: O(nprobe × cluster_size) - 10ms for 10k chunks
 2. **Hybrid search** combines vector (semantic) + FTS (keyword) via RRF
 3. **Reranking** refines results but accounts for 50% of search time
 4. **Performance** is within interactive latency (< 300ms typical)

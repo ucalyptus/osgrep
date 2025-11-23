@@ -93,12 +93,16 @@ final_score = 0.7 × rerank_score + 0.3 × rrf_score
 
 ## Performance Benchmarks
 
-### Search Latency (10k chunks)
+### Search Latency
+Test conditions: 10k chunks, M1 MacBook Pro / similar x86 system
+
 - Query embedding: 30-100ms (5-20ms if cached)
 - Vector search (IVF): 10-50ms
 - FTS search: 5-20ms
 - Reranking: 50-200ms
 - **Total: 100-400ms** (median ~180ms)
+
+Note: Times scale with chunk count and hardware. Large repos (100k+ chunks) may take 500-1000ms.
 
 ### Index Creation
 - 1k chunks: ~1 second
