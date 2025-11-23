@@ -20,7 +20,7 @@ export const CLAUDE_CALLERS = ["claude", "claude-code"] as const;
  * Check if the caller is Claude Code
  */
 export function isClaudeCaller(caller: string): boolean {
-  return CLAUDE_CALLERS.includes(caller as typeof CLAUDE_CALLERS[number]);
+  return caller === "claude" || caller === "claude-code";
 }
 
 /**
