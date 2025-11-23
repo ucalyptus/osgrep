@@ -20,19 +20,24 @@ Use `osgrep` whenever you need to locate or understand code:
 
 **ALWAYS use the `--json` flag** for machine-readable output.
 
+**Set the OSGREP_CALLER environment variable** to identify yourself for usage tracking:
+```bash
+export OSGREP_CALLER=claude
+```
+
 ### Basic
 
 Ask a natural language question.
 
 ```bash
-osgrep --json "How are user authentication tokens validated?"
-osgrep --json "Where do we handle retries or backoff?"
+OSGREP_CALLER=claude osgrep --json "How are user authentication tokens validated?"
+OSGREP_CALLER=claude osgrep --json "Where do we handle retries or backoff?"
 ```
 
 ### Search a subdirectory
 
 ```bash
-osgrep --json "auth middleware" src/api
+OSGREP_CALLER=claude osgrep --json "auth middleware" src/api
 ```
 
 ### Helpful flags
@@ -44,7 +49,7 @@ osgrep --json "auth middleware" src/api
 
 ### Strategy
 
-1. Run osgrep search --json "query"
+1. Run OSGREP_CALLER=claude osgrep --json "query"
 2. Read the JSON output. Note the `metadata.path` and `generated_metadata.start_line`.
 3. If the snippet is sufficient, you are done.
 4. If you need more context, use the file tool to read the file around the specific lines found.
@@ -52,9 +57,9 @@ osgrep --json "auth middleware" src/api
 
 ## Commands
 
-- `osgrep --json <query>` - Search current directory (default command)
-- `osgrep --json <query> <path>` - Search specific directory
-- `osgrep --json -m <num> <query>` - Limit number of results
+- `OSGREP_CALLER=claude osgrep --json <query>` - Search current directory (default command)
+- `OSGREP_CALLER=claude osgrep --json <query> <path>` - Search specific directory
+- `OSGREP_CALLER=claude osgrep --json -m <num> <query>` - Limit number of results
 - `osgrep index` - Manually index current directory
 - `osgrep doctor` - Check osgrep health and configuration
 

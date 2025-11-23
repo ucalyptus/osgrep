@@ -5,6 +5,7 @@ import { program } from "commander";
 import { doctor } from "./commands/doctor";
 import { index } from "./commands/index";
 import { list } from "./commands/list";
+import { log } from "./commands/log";
 import { search } from "./commands/search";
 import { setup } from "./commands/setup";
 import { installClaudeCode } from "./install/claude-code";
@@ -28,6 +29,7 @@ program
 program.addCommand(search, { isDefault: true });
 program.addCommand(index);
 program.addCommand(list);
+program.addCommand(log);
 program.addCommand(setup);
 program.addCommand(installClaudeCode);
 program.addCommand(doctor);
