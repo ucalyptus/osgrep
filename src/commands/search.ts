@@ -16,7 +16,7 @@ import {
   createIndexingSpinner,
   formatDryRunSummary,
 } from "../lib/sync-helpers";
-import { getUsageLogger } from "../lib/usage-logger";
+import { getUsageLogger, isClaudeCaller } from "../lib/usage-logger";
 import { initialSync, MetaStore } from "../utils";
 
 // --- UI Helpers (No external deps) ---
@@ -434,7 +434,7 @@ export const search: Command = new CommanderCommand("search")
         timestamp: new Date().toISOString(),
         query: pattern,
         resultsCount: results.data.length,
-        isClaudeCode: caller === "claude" || caller === "claude-code",
+        isClaudeCode: isClaudeCaller(caller),
         caller,
         storeId,
       });

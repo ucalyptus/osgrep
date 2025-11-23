@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { Command } from "commander";
-import { getUsageLogger, type UsageLogEntry } from "../lib/usage-logger";
+import { getUsageLogger, isClaudeCaller, type UsageLogEntry } from "../lib/usage-logger";
 
 const style = {
   bold: (s: string) => `\x1b[1m${s}\x1b[22m`,
@@ -107,7 +107,7 @@ export const log = new Command("log")
       for (const entry of recent) {
         // Format source with icon and caller name
         let source: string;
-        if (entry.caller === "claude" || entry.caller === "claude-code") {
+        if (isClaudeCaller(entry.caller)) {
           source = style.blue("🤖 Claude Code");
         } else if (entry.caller === "cli") {
           source = style.dim("💻 CLI");
@@ -131,7 +131,10 @@ export const log = new Command("log")
       console.log(style.dim(`\nTo enable logging: export OSGREP_LOG=1`));
       console.log(style.dim(`For verbose output: export OSGREP_VERBOSE=1`));
     } catch (error) {
-      if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+      // Type guard for NodeJS ErrnoException
+      const isEnoent = error && typeof error === "object" && "code" in error && error.code === "ENOENT";
+      
+      if (isEnoent) {
         console.log("No usage log file found.");
         console.log("\nTo enable usage logging:");
         console.log("  1. Set the environment variable: export OSGREP_LOG=1");
