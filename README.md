@@ -44,6 +44,34 @@ Natural-language search that works like `grep`. Fast, local, and works with codi
 2. Open Claude Code (`claude`) and ask it questions about your codebase.
 3. It will use `osgrep` to find relevant context automatically.
 
+**Verify Claude Code is Using osgrep**
+
+To track when osgrep is being invoked:
+
+```bash
+# Enable usage logging
+export OSGREP_LOG=1
+
+# Optional: Enable verbose output to stderr
+export OSGREP_VERBOSE=1
+
+# Run searches (or let Claude Code use osgrep)
+# Then view the log
+osgrep log
+
+# Show only Claude Code searches
+osgrep log --claude-only
+
+# Show last 50 entries
+osgrep log -n 50
+```
+
+Usage logs are stored in `~/.osgrep/usage.log` and track:
+- Timestamp of each search
+- Query text
+- Number of results
+- Whether invoked by Claude Code (via `--json` flag) or CLI
+
 ## Commands
 
 ### `osgrep search`
@@ -100,6 +128,26 @@ osgrep list
 
 Shows store names, sizes, and last modified times. Useful for seeing what's indexed and cleaning up old stores.
 
+### `osgrep log`
+
+View osgrep usage history to verify when and how osgrep is being invoked.
+
+```bash
+osgrep log                # Show recent searches
+osgrep log --claude-only  # Show only Claude Code invocations
+osgrep log -n 50          # Show last 50 entries
+osgrep log --json         # Output as JSON
+```
+
+**Options:**
+| Flag | Description | Default |
+| --- | --- | --- |
+| `-n, --lines <n>` | Number of recent entries to show | `20` |
+| `--claude-only` | Show only searches from Claude Code | `false` |
+| `--json` | Output results as JSON | `false` |
+
+**Note:** Requires `OSGREP_LOG=1` environment variable to be set before running searches.
+
 ### `osgrep doctor`
 
 Checks installation health, model paths, and database integrity.
@@ -147,6 +195,8 @@ Stores are isolated automatically — no manual `--store` flags needed!
   - **Env Vars:**
       - `MXBAI_STORE`: Override default store name
       - `OSGREP_PROFILE=1`: Enable performance profiling logs
+      - `OSGREP_LOG=1`: Enable usage logging to `~/.osgrep/usage.log`
+      - `OSGREP_VERBOSE=1`: Enable verbose logging output to stderr
 
 ## Development
 

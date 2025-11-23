@@ -16,6 +16,7 @@ import {
   createIndexingSpinner,
   formatDryRunSummary,
 } from "../lib/sync-helpers";
+import { getUsageLogger } from "../lib/usage-logger";
 import { initialSync, MetaStore } from "../utils";
 
 // --- UI Helpers (No external deps) ---
@@ -424,6 +425,16 @@ export const search: Command = new CommanderCommand("search")
           ],
         },
       );
+
+      // Log usage for tracking (helps verify Claude Code is using osgrep)
+      const logger = getUsageLogger();
+      await logger.logSearch({
+        timestamp: new Date().toISOString(),
+        query: pattern,
+        resultsCount: results.data.length,
+        isClaudeCode: options.json, // --json flag indicates Claude Code usage
+        storeId,
+      });
 
       // Handle JSON output
       if (options.json) {
