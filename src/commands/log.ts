@@ -105,9 +105,17 @@ export const log = new Command("log")
       }
 
       for (const entry of recent) {
-        const source = entry.isClaudeCode 
-          ? style.blue("🤖 Claude Code") 
-          : style.dim("💻 CLI");
+        // Format source with icon and caller name
+        let source: string;
+        if (entry.caller === "claude" || entry.caller === "claude-code") {
+          source = style.blue("🤖 Claude Code");
+        } else if (entry.caller === "cli") {
+          source = style.dim("💻 CLI");
+        } else if (entry.caller === "json-client") {
+          source = style.dim("🔌 JSON Client");
+        } else {
+          source = style.dim(`🔧 ${entry.caller}`);
+        }
         
         const time = style.dim(formatTimestamp(entry.timestamp));
         const results = entry.resultsCount > 0 

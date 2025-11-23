@@ -49,6 +49,7 @@ describe("UsageLogger", () => {
       query: "test query",
       resultsCount: 5,
       isClaudeCode: false,
+      caller: "cli",
       storeId: "test-store",
     };
 
@@ -67,6 +68,7 @@ describe("UsageLogger", () => {
       query: "test query",
       resultsCount: 5,
       isClaudeCode: false,
+      caller: "cli",
       storeId: "test-store",
     };
 
@@ -79,6 +81,7 @@ describe("UsageLogger", () => {
     expect(content).toContain("test query");
     expect(content).toContain('"resultsCount":5');
     expect(content).toContain('"isClaudeCode":false');
+    expect(content).toContain('"caller":"cli"');
   });
 
   it("should log multiple entries", async () => {
@@ -89,6 +92,7 @@ describe("UsageLogger", () => {
       query: "first query",
       resultsCount: 3,
       isClaudeCode: false,
+      caller: "cli",
       storeId: "test-store",
     });
 
@@ -97,6 +101,7 @@ describe("UsageLogger", () => {
       query: "second query",
       resultsCount: 7,
       isClaudeCode: true,
+      caller: "claude",
       storeId: "test-store",
     });
 
@@ -114,8 +119,10 @@ describe("UsageLogger", () => {
     
     expect(entry1.query).toBe("first query");
     expect(entry1.isClaudeCode).toBe(false);
+    expect(entry1.caller).toBe("cli");
     expect(entry2.query).toBe("second query");
     expect(entry2.isClaudeCode).toBe(true);
+    expect(entry2.caller).toBe("claude");
   });
 
   it("should respect OSGREP_LOG environment variable", () => {
@@ -145,6 +152,7 @@ describe("UsageLogger", () => {
       query: "test query",
       resultsCount: 1,
       isClaudeCode: false,
+      caller: "cli",
       storeId: "test-store",
     };
 
@@ -176,6 +184,7 @@ describe("UsageLogger", () => {
       query: "test query",
       resultsCount: 1,
       isClaudeCode: false,
+      caller: "cli",
       storeId: "test-store",
     };
 

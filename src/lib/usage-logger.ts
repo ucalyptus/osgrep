@@ -7,6 +7,7 @@ export interface UsageLogEntry {
   query: string;
   resultsCount: number;
   isClaudeCode: boolean;
+  caller: string;
   storeId: string;
 }
 
@@ -59,8 +60,7 @@ export class UsageLogger {
 
       // Also log to stderr if verbose
       if (process.env.OSGREP_VERBOSE === "1" || process.env.OSGREP_VERBOSE === "true") {
-        const source = entry.isClaudeCode ? "Claude Code" : "CLI";
-        console.error(`[osgrep] ${entry.timestamp} - ${source} searched: "${entry.query}" (${entry.resultsCount} results)`);
+        console.error(`[osgrep] ${entry.timestamp} - ${entry.caller} searched: "${entry.query}" (${entry.resultsCount} results)`);
       }
     } catch (error) {
       // Silently fail - don't break the search if logging fails

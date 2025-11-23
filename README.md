@@ -70,7 +70,9 @@ Usage logs are stored in `~/.osgrep/usage.log` and track:
 - Timestamp of each search
 - Query text
 - Number of results
-- Whether invoked by Claude Code (via `--json` flag) or CLI
+- Invocation source (Claude Code, CLI, or JSON client)
+
+**Note:** Claude Code identifies itself by setting `OSGREP_CALLER=claude`. Any client can set this environment variable to identify itself in the logs.
 
 ## Commands
 
@@ -197,6 +199,7 @@ Stores are isolated automatically — no manual `--store` flags needed!
       - `OSGREP_PROFILE=1`: Enable performance profiling logs
       - `OSGREP_LOG=1`: Enable usage logging to `~/.osgrep/usage.log`
       - `OSGREP_VERBOSE=1`: Enable verbose logging output to stderr
+      - `OSGREP_CALLER`: Identify the caller in usage logs (e.g., `claude`, `vscode`, `cli`)
 
 ## Development
 
