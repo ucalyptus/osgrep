@@ -162,6 +162,19 @@ pnpm format       # biome check
   - **Weird results?** Run `osgrep doctor` to verify models.
   - **Need a fresh start?** Delete `~/.osgrep/data` and re-index.
 
+## Architecture & How It Works
+
+Want to understand how osgrep implements semantic search under the hood?
+
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** - Deep dive into transformers.js, LanceDB, and k-means clustering
+- **[docs/SEARCH_PIPELINE.md](docs/SEARCH_PIPELINE.md)** - Visual flow of the search pipeline
+
+Topics covered:
+- How transformers.js provides local ML embeddings
+- How LanceDB stores and indexes vectors
+- How k-means clustering (via IVF indexing) accelerates search
+- Hybrid search with RRF fusion and neural reranking
+
 ## License
 
 Licensed under the Apache License, Version 2.0.  
